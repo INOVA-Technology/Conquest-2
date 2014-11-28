@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+require "curses"
+require_relative "lib/console"
+require_relative "lib/player"
+require_relative "lib/game_object"
+require_relative "lib/scene"
+
+Curses.noecho
+Curses.init_screen
+Curses.refresh
+
+# init
+Console.start(26, 5)
+scene = Scene.new
+
+scene.set_player(Player.new, 1, 1)
+
+loop do
+	# draw
+	scene.draw
+
+	# get input
+	key = scene.getkey
+
+	case key
+	when 258 # down
+		scene.move_player(:down)
+	when 259 # up
+		scene.move_player(:up)
+	when 260 # left
+		scene.move_player(:left)
+	when 261 # right
+		scene.move_player(:right)
+	when "q"
+		exit
+	end
+end
+
+scene.move_object(0, 3, 3)
+scene.draw
+
+scene.getkey
+
+Curses.close_screen
