@@ -37,7 +37,7 @@ loop do
 	when 261
 		scene.move_player(:right)
 	when "i"
-		menu = InventoryMenu.new(30, 20, 5, 5)
+		menu = InventoryMenu.new(30, 20, scene.width, scene.height)
 		menu.draw(scene.player.inventory)
 		Curses.getch
 		menu.close
@@ -48,7 +48,7 @@ loop do
 		Curses.close_screen
 		exit
 	when "?"
-		help = HelpMenu.new(20, 10, 5, 5)
+		help = HelpMenu.new(20, 10, scene.width, scene.height)
 		help.draw
 		Curses.getch
 		help.close

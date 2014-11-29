@@ -1,11 +1,11 @@
 class Scene
 
-	attr_accessor :player
+	attr_accessor :player, :width, :height
 
 	def initialize
 		@width = 60
 		@height = 20
-		@win = Curses::Window.new(@height, @width, 1, 1)
+		@win = Curses::Window.new(@height, @width, 0, 0)
 		@win.bkgd(".")
 		@objects = {}
 		@player = nil
