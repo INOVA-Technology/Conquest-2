@@ -21,6 +21,9 @@ scene.set_player(Player.new, 1, 1)
 
 scene.add_object(Pizza.new, 3, 3)
 
+inventory_menu = InventoryMenu.new(30, 20, scene.width, scene.height)
+help_menu = HelpMenu.new(30, 10, scene.width, scene.height)
+
 loop do
 	scene.draw
 	Console.draw
@@ -37,21 +40,22 @@ loop do
 	when 261
 		scene.move_player(:right)
 	when "i"
-		menu = InventoryMenu.new(30, 20, scene.width, scene.height)
-		menu.draw(scene.player.inventory)
+		inventory_menu.draw(scene.player.inventory)
 		Curses.getch
-		menu.close
+		inventory_menu.hide
 	when "p"
 		scene.pickup_item
 	when "q"
 		scene.close
+		Console.close
+		inventory_menu.close
+		help_menu.close
 		Curses.close_screen
 		exit
 	when "?"
-		help = HelpMenu.new(20, 10, scene.width, scene.height)
-		help.draw
+		help_menu.draw
 		Curses.getch
-		help.close
+		help_menu.hide
 	else
 		Console.log(key.inspect, true)
 	end

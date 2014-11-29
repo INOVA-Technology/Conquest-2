@@ -27,5 +27,9 @@ class Console
 			end
 			@@win.refresh
 		end
+
+		def close
+			@@win.close
+		end
 	end
 end

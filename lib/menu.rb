@@ -28,15 +28,45 @@ class Menu
 		@win.refresh
 	end
 
-	def close
+	def hide
 		@win.clear
 		@win.box(" ", " ", " ")
 		@win.refresh
+	end
+
+	def close
 		@win.close
 	end
 end
 
 class HelpMenu < Menu
+	def draw
+		@win.clear
+		@win.box("|", "-")
+		draw_centered_x("Help", 1)
+		["1 - List Commands"].each_with_index do |cmd, i|
+			@win.setpos(i + 1, 2)
+			@win << cmd
+		end
+		@win.refresh
+		key = Curses.getch
+		case key
+		when "1" then list_commands
+		when "q" then return
+		end
+	end
+
+	def list_commands
+		@win.clear
+		@win.box("|", "-")
+		["i - show inventory",
+		 "p - pickup item",
+		 "? - show help menu"].each_with_index do |cmd, i|
+			@win.setpos(i + 1, 2)
+			@win << cmd
+		 end
+		 @win.refresh
+	end
 end
 
 class InventoryMenu < Menu
@@ -48,8 +78,6 @@ class InventoryMenu < Menu
 			@win.setpos(i + 3, 2)
 			@win << item.name(:article)
 		end
-		@win.setpos(1, 1)
-		@win << 
 		@win.refresh
 	end
 end
