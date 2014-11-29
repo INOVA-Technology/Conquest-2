@@ -1,9 +1,10 @@
 class Player
 
-	attr_accessor :x, :y
+	attr_accessor :x, :y, :inventory
 
 	def initialize
 		@image = "@"
+		@inventory = []
 	end
 
 	def to_s

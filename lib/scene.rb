@@ -3,12 +3,18 @@ class Scene
 	attr_accessor :player
 
 	def initialize
-		@win = Curses::Window.new(25, 80, 0, 0)
+		@width = 60
+		@height = 20
+		@win = Curses::Window.new(@height, @width, 0, 0)
 		@win.bkgd(".")
 		@win.box("|", "-")
 		@win.keypad = true
 		@objects = {}
 		@player = nil
+	end
+
+	def item_at(x, y)
+		@objects[[x, y]]
 	end
 
 	def set_player(player, x, y)
@@ -18,17 +24,49 @@ class Scene
 	end
 
 	def move_player(direction)
+		x = @player.x
+		y = @player.y
 		case direction.to_sym
 		when :down
-			@player.y += 1
+			if y < @height - 1
+				if i = item_at(x, y + 1)
+					return unless i.permeable
+				end
+				@player.y += 1
+			end
 		when :up
-			@player.y -= 1
+			if y > 0
+				if i = item_at(x, y - 1)
+					return unless i.permeable
+				end
+				@player.y -= 1
+			end
 		when :left
-			@player.x -= 1
+			if x > 0
+				if i = item_at(x - 1, y)
+					return unless i.permeable
+				end
+				@player.x -= 1
+			end
 		when :right
-			@player.x += 1
+			if x < @width - 1
+				if i = item_at(x + 1, y)
+					return unless i.permeable
+				end
+				@player.x += 1
+			end
 		else
-			Console.log("Invalid direction: #{direction.inspect}")
+			Console.log("Scene#move_player: invalid direction: #{direction.inspect}", true)
+		end
+	end
+
+	def pickup_item
+		pos = [@player.x, @player.y]
+		if @objects[pos]
+			@player.inventory << item = @objects.delete(pos)
+			Console.log("You picked up #{item.name(:article)}")
+		else
+			Console.log("There is nothing here to pickup.")
 		end
 	end
 
@@ -37,7 +75,6 @@ class Scene
 	end
 
 	def add_object(obj, x, y)
-		obj.id = @objects.length if GameObject == obj
 		@objects[[x, y]] = obj
 	end
 

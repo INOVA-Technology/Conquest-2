@@ -6,14 +6,20 @@ class Console
 			@@messages = []
 		end
 
-		def log(message)
-			return unless ARGV[0] == "-d"
+		def log(message, dev = false)
 			@@win.clear
+			if dev
+				if ARGV[0] == "-d"
+					message = "Log: " + message
+				else
+					return
+				end
+			end
 			@@messages.unshift(message)
 			@@messages.pop if @@messages.length > @@max_messages
 			@@messages.each_with_index do |m, i|
 				@@win.setpos(i, 0)
-				@@win << m
+				@@win << m.to_s
 			end
 			@@win.refresh
 		end

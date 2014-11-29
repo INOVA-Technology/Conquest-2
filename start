@@ -6,34 +6,38 @@ require_relative "lib/player"
 require_relative "lib/game_object"
 require_relative "lib/scene"
 
+Curses.raw
 Curses.noecho
 Curses.init_screen
 Curses.refresh
 
 # init
-Console.start(26, 5)
+Console.start(21, 5)
 scene = Scene.new
-
 scene.set_player(Player.new, 1, 1)
 
+scene.add_object(Pizza.new, 3, 3)
+
 loop do
-	# draw
 	scene.draw
 
-	# get input
 	key = scene.getkey
 
 	case key
-	when 258 # down
+	when 258
 		scene.move_player(:down)
-	when 259 # up
+	when 259
 		scene.move_player(:up)
-	when 260 # left
+	when 260
 		scene.move_player(:left)
-	when 261 # right
+	when 261
 		scene.move_player(:right)
+	when "p"
+		scene.pickup_item
 	when "q"
 		exit
+	else
+		Console.log(key.inspect, true)
 	end
 end
 
