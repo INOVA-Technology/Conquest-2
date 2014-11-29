@@ -2,6 +2,7 @@
 
 require "curses"
 require_relative "lib/console"
+require_relative "lib/menu"
 require_relative "lib/player"
 require_relative "lib/game_object"
 require_relative "lib/scene"
@@ -9,10 +10,12 @@ require_relative "lib/scene"
 Curses.raw
 Curses.noecho
 Curses.init_screen
+Curses.stdscr.keypad(true)
+Curses.curs_set(0)
 Curses.refresh
 
 # init
-Console.start(21, 5)
+Console.start(22, 5)
 scene = Scene.new
 scene.set_player(Player.new, 1, 1)
 
@@ -20,8 +23,9 @@ scene.add_object(Pizza.new, 3, 3)
 
 loop do
 	scene.draw
+	Console.draw
 
-	key = scene.getkey
+	key = Curses.getch
 
 	case key
 	when 258
@@ -32,18 +36,23 @@ loop do
 		scene.move_player(:left)
 	when 261
 		scene.move_player(:right)
+	when "i"
+		menu = InventoryMenu.new(30, 20, 5, 5)
+		menu.draw(scene.player.inventory)
+		Curses.getch
+		menu.close
 	when "p"
 		scene.pickup_item
 	when "q"
+		scene.close
+		Curses.close_screen
 		exit
+	when "?"
+		help = HelpMenu.new(20, 10, 5, 5)
+		help.draw
+		Curses.getch
+		help.close
 	else
 		Console.log(key.inspect, true)
 	end
 end
-
-scene.move_object(0, 3, 3)
-scene.draw
-
-scene.getkey
-
-Curses.close_screen

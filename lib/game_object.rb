@@ -2,6 +2,8 @@ class GameObject
 
 	attr_accessor :permeable
 
+	alias_method :permeable?, :permeable
+
 	def initialize(image)
 		@image = image
 		@permeable = true
