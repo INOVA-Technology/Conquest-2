@@ -13,7 +13,7 @@ module SceneList
 	SCENES[:start].add_object(Wall.new(:h), 9, 5)
 	SCENES[:start].add_object(Wall.new(:tr), 10, 5)
 	SCENES[:start].add_object(Wall.new(:v), 10, 6)
-	SCENES[:start].add_object(Door.new, 10, 7)
+	# door/entrance here                    10, 7
 	SCENES[:start].add_object(Wall.new(:v), 10, 8)
 	SCENES[:start].add_object(Wall.new(:v), 10, 9)
 	SCENES[:start].add_object(Wall.new(:br), 10, 10)

@@ -35,12 +35,6 @@ class Wall < GameObject
 	end
 end
 
-class Door < GameObject
-	def initialize
-		super(".")
-	end
-end
-
 class Food < GameObject
 
 	def initialize(image, health)
