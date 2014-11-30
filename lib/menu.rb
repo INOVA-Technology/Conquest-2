@@ -110,7 +110,6 @@ class HelpMenu < Menu
 		end
 		actions
 	end
-
 end
 
 class CommandsMenu < Menu
@@ -131,5 +130,4 @@ class InventoryMenu < Menu
 		duh = @inventory.map { |item| item.name(:article) }
 		draw_list(duh, 2)
 	end
-
 end

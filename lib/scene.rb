@@ -33,7 +33,7 @@ class Scene
 				end
 				@player.y += 1
 			elsif y == @height - 2
-				return { scene: [@directions[:s], @player, @player.x, 1] }
+				return { scene: [@directions[:s], @player, x, 1] }
 			end
 		when :up
 			if y > 1
@@ -42,7 +42,7 @@ class Scene
 				end
 				@player.y -= 1
 			elsif y == 1
-				return { scene: [@directions[:n], @player, @player.x, @height - 2] }
+				return { scene: [@directions[:n], @player, x, @height - 2] }
 			end
 		when :left
 			if x > 1
@@ -51,7 +51,7 @@ class Scene
 				end
 				@player.x -= 1
 			else
-				return { scene: [@directions[:w], @player, @width - 2, @player.y] }
+				return { scene: [@directions[:w], @player, @width - 2, y] }
 			end
 		when :right
 			if x < @width - 2
@@ -60,7 +60,7 @@ class Scene
 				end
 				@player.x += 1
 			elsif x == @width - 2
-				return { scene: [@directions[:e], @player, 1, @player.y] }
+				return { scene: [@directions[:e], @player, 1, y] }
 			end
 		else
 			Console.log("Scene#move_player: invalid direction: #{direction.inspect}", true)
