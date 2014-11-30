@@ -15,6 +15,26 @@ class GameObject
 
 end
 
+class Wall < GameObject
+	def initialize(direction)
+		image = case direction
+				when :horizontal, :h then "-"
+				when :vertical, :v then "|"
+				else
+					Console.log("Wall::new: invalid direction: #{direction.inspect}")
+					"|"
+				end
+		super(image)
+		@permeable = false
+	end
+end
+
+class Door < GameObject
+	def initialize
+		super(".")
+	end
+end
+
 class Food < GameObject
 
 	def initialize(image, health)
