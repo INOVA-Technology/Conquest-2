@@ -15,48 +15,74 @@ Curses.curs_set(0)
 Curses.refresh
 
 # init
-Console.start(22, 5)
-scene = Scene.new
-scene.set_player(Player.new, 1, 1)
+Console.start(17, 5)
 
-scene.add_object(Pizza.new, 3, 3)
+class Game
 
-inventory_menu = InventoryMenu.new(30, 20, scene.width, scene.height)
-help_menu = HelpMenu.new(30, 10, scene.width, scene.height)
+	def initialize
+		@scene = Scene.new
+		@scene.set_player(Player.new, @scene.width / 2, @scene.height / 2)
 
-loop do
-	scene.draw
-	Console.draw
-
-	key = Curses.getch
-
-	case key
-	when 258
-		scene.move_player(:down)
-	when 259
-		scene.move_player(:up)
-	when 260
-		scene.move_player(:left)
-	when 261
-		scene.move_player(:right)
-	when "i"
-		inventory_menu.draw(scene.player.inventory)
-		Curses.getch
-		inventory_menu.hide
-	when "p"
-		scene.pickup_item
-	when "q"
-		scene.close
-		Console.close
-		inventory_menu.close
-		help_menu.close
-		Curses.close_screen
-		exit
-	when "?"
-		help_menu.draw
-		Curses.getch
-		help_menu.hide
-	else
-		Console.log(key.inspect, true)
+		@scene.add_object(Pizza.new, 3, 3)
+		@menus = {
+			inventory: InventoryMenu.new(30, 15, @scene.width, @scene.height),
+			help: HelpMenu.new(30, 10, @scene.width, @scene.height),
+			commands: CommandsMenu.new(30, 10, @scene.width, @scene.height)
+		}
 	end
+
+	def handle_actions(actions)
+		if menu = actions[:menu]
+			m = @menus[menu]
+			if m
+				m.show
+				m.hide
+			else
+				Console.log("Game#handle_actions: menu '#{menu.inspect}' doesn't exist")
+			end
+		end
+	end
+
+	def game_loop
+		loop do
+			@scene.draw
+			Console.draw
+
+			key = Curses.getch
+
+			case key
+			when 258
+				@scene.move_player(:down)
+			when 259
+				@scene.move_player(:up)
+			when 260
+				@scene.move_player(:left)
+			when 261
+				@scene.move_player(:right)
+			when "i"
+				@menus[:inventory].inventory = @scene.player.inventory
+				q = @menus[:inventory].show
+				@menus[:inventory].hide
+				handle_actions(q)
+			when "p"
+				@scene.pickup_item
+			when "q"
+				@scene.close
+				Console.close
+				@menus.each { |m| m.close }
+				Curses.close_screen
+				exit
+			when "?"
+				q = @menus[:help].show
+				@menus[:help].hide
+				handle_actions(q)
+			else
+				Console.log(key.inspect, true)
+			end
+		end
+	end
+
 end
+
+game = Game.new
+game.game_loop

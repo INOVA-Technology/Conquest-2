@@ -7,6 +7,7 @@ class Console
 		end
 
 		def log(message, dev = false)
+			message = message.to_s
 			if dev
 				if ARGV[0] == "-d"
 					message = "Log: " + message

@@ -5,6 +5,7 @@ class Player
 	def initialize
 		@image = "@"
 		@inventory = []
+		@health = 15
 	end
 
 	def to_s

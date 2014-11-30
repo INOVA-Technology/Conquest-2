@@ -3,8 +3,8 @@ class Scene
 	attr_accessor :player, :width, :height
 
 	def initialize
-		@width = 60
-		@height = 20
+		@width = 40
+		@height = 15
 		@win = Curses::Window.new(@height, @width, 0, 0)
 		@win.bkgd(".")
 		@objects = {}
@@ -62,7 +62,7 @@ class Scene
 		pos = [@player.x, @player.y]
 		if @objects[pos]
 			@player.inventory << item = @objects.delete(pos)
-			Console.log("You picked up #{item.name(:article)}")
+			Console.log("You picked up #{item.name(:article)}!")
 		else
 			Console.log("There is nothing here to pickup.")
 		end
