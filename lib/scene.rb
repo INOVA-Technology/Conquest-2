@@ -71,8 +71,12 @@ class Scene
 	def pickup_item
 		pos = [@player.x, @player.y]
 		if @objects[pos]
-			@player.inventory << item = @objects.delete(pos)
-			Console.log("You picked up #{item.name(:article)}!")
+			if @objects[pos].can_pickup?
+				@player.inventory << item = @objects.delete(pos)
+				Console.log("You picked up #{item.name(:article)}!")
+			else
+				Console.log("There is nothing here to pickup.")
+			end
 		else
 			Console.log("There is nothing here to pickup.")
 		end
