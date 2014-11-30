@@ -69,7 +69,7 @@ class Game
 			when "q"
 				@scene.close
 				Console.close
-				@menus.each { |m| m.close }
+				@menus.each { |_, m| m.close }
 				Curses.close_screen
 				exit
 			when "?"

@@ -9,6 +9,7 @@ class Menu
 		@y = (parent_height - @height) / 2
 		@win = Curses::Window.new(@height, @width, @y, @x)
 		@scroll_level = 0
+		@line_count = 0
 	end
 
 	def draw_centered_x(str, y)
@@ -23,15 +24,16 @@ class Menu
 		@win << str
 	end
 
-	def draw_pt0
+	def draw
+		@line_count = 0
 		@win.clear
-		draw
+		draw_text
 		@win.box("|", "-")
 		@win.refresh
 	end
 
 	def show
-		draw_pt0
+		draw
 		handle_keys
 	end
 
@@ -51,18 +53,19 @@ class Menu
 		{}
 	end
 
-	def draw
+	def draw_text
 	end
 
 	def scroll_down
+		return unless @line_count + @scroll_level > @height - 2
 		@scroll_level -= 1
-		draw_pt0
+		draw
 	end
 
 	def scroll_up
 		return if @scroll_level == 0
 		@scroll_level += 1
-		draw_pt0
+		draw
 	end
 
 	def hide
@@ -74,6 +77,17 @@ class Menu
 
 	def title(da_title)
 		draw_centered_x(da_title, @scroll_level + 1)
+		@line_count += 1
+	end
+
+	def draw_list(list, y)
+		list.each_with_index do |cmd, i|
+			y_pos = i + y + @scroll_level
+			next if y_pos < 0
+			@win.setpos(y_pos, 2)
+			@win << cmd
+		end
+		@line_count += list.length
 	end
 
 	def close
@@ -82,12 +96,10 @@ class Menu
 end
 
 class HelpMenu < Menu
-	def draw
+	def draw_text
 		title("Help")
-		["1 - List Commands"].each_with_index do |cmd, i|
-			@win.setpos(i + 2 + @scroll_level, 2)
-			@win << cmd
-		end
+		list = ["1 - List Commands"]
+		draw_list(list, 2)
 	end
 
 	def extra_keys(key)
@@ -102,13 +114,11 @@ class HelpMenu < Menu
 end
 
 class CommandsMenu < Menu
-	def draw
-		["i - show inventory",
-		 "p - pickup item",
-		 "? - show help menu"].each_with_index do |cmd, i|
-			@win.setpos(i + 1 + @scroll_level, 2)
-			@win << cmd
-		 end
+	def draw_text
+		cmds = ["i - show inventory",
+				"p - pickup item",
+				"? - show help menu"]
+		draw_list(cmds, 1)
 	end
 end
 
@@ -116,12 +126,10 @@ class InventoryMenu < Menu
 
 	attr_accessor :inventory
 
-	def draw
+	def draw_text
 		title("Inventory")
-		@inventory.each_with_index do |item, i|
-			@win.setpos(i + @scroll_level + 2, 2)
-			@win << item.name(:article)
-		end
+		duh = @inventory.map { |item| item.name(:article) }
+		draw_list(duh, 2)
 	end
 
 end
