@@ -6,6 +6,7 @@ require_relative "lib/menu"
 require_relative "lib/player"
 require_relative "lib/game_object"
 require_relative "lib/scene"
+require_relative "lib/scene_list"
 
 Curses.raw
 Curses.noecho
@@ -20,10 +21,9 @@ Console.start(17, 5)
 class Game
 
 	def initialize
-		@scene = Scene.new
+		@scene = SceneList::SCENES[:start]
 		@scene.set_player(Player.new, @scene.width / 2, @scene.height / 2)
 
-		@scene.add_object(Pizza.new, 3, 3)
 		@menus = {
 			inventory: InventoryMenu.new(30, 15, @scene.width, @scene.height),
 			help: HelpMenu.new(30, 10, @scene.width, @scene.height),
@@ -32,13 +32,21 @@ class Game
 	end
 
 	def handle_actions(actions)
-		if menu = actions[:menu]
-			m = @menus[menu]
-			if m
-				m.show
-				m.hide
+		if actions[:menu]
+			menu = @menus[actions[:menu]]
+			if menu
+				menu.show
+				menu.hide
 			else
 				Console.log("Game#handle_actions: menu '#{menu.inspect}' doesn't exist")
+			end
+		end
+		if actions[:scene]
+			# actions[:scene] would be like: [:room_name, the_player, new_x, new_y]
+			scene = SceneList::SCENES[actions[:scene][0]]
+			if scene
+				@scene = scene
+				@scene.set_player(actions[:scene][1], actions[:scene][2], actions[:scene][3])
 			end
 		end
 	end
@@ -52,13 +60,13 @@ class Game
 
 			case key
 			when 258
-				@scene.move_player(:down)
+				handle_actions(@scene.move_player(:down))
 			when 259
-				@scene.move_player(:up)
+				handle_actions(@scene.move_player(:up))
 			when 260
-				@scene.move_player(:left)
+				handle_actions(@scene.move_player(:left))
 			when 261
-				@scene.move_player(:right)
+				handle_actions(@scene.move_player(:right))
 			when "i"
 				@menus[:inventory].inventory = @scene.player.inventory
 				q = @menus[:inventory].show
