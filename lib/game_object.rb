@@ -9,10 +9,22 @@ class GameObject
 		@image = image
 		@permeable = true
 		@can_pickup = false
+		@names = ["", "", ""]
 	end
 
 	def to_s
 		@image
+	end
+
+	def name(option = nil)
+		case option
+		when :article then @names[1]
+		when :plural then @names[2]
+		else
+			Console.log("#{self.class}#name: unknown option: #{option.inspect}") \
+				unless option == nil
+			@names[0]
+		end
 	end
 
 end
@@ -36,30 +48,24 @@ class Wall < GameObject
 end
 
 class Food < GameObject
-
 	def initialize(image, health)
 		super(image)
 		@health = health
 		@can_pickup = true
 	end
-
 end
 
 class Pizza < Food
-
 	def initialize
 		super("∆", 10)
+		@names = ["pizza", "a pizza", "pizzas"]
 	end
+end
 
-	def name(option = nil)
-		case option
-		when :plural then "pizzas"
-		when :article then "a pizza"
-		else
-			"pizza"
-			Console.log("Pizza#name: unknown option: #{option.inspect}", true) \
-				unless option == nil
-		end
+class Shrubbery < GameObject
+	def initialize
+		super("%")
+		@can_pickup = true
+		@names = ["shrubbery", "a shrubbery", "shrubberies"]
 	end
-
 end

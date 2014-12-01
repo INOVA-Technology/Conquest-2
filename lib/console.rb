@@ -6,18 +6,16 @@ class Console
 			@@messages = []
 		end
 
-		def log(message, dev = false)
+		def write(message)
 			message = message.to_s
-			if dev
-				if ARGV[0] == "-d"
-					message = "Log: " + message
-				else
-					return
-				end
-			end
 			@@messages.unshift(message)
 			@@messages.pop if @@messages.length > @@max_messages
 			draw
+		end
+
+		def log(message)
+			return unless ARGV[0] == "-d"
+			write("Log: " + message.to_s)
 		end
 
 		def draw

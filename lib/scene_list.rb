@@ -27,6 +27,8 @@ module SceneList
 	SCENES[:start].add_object(Wall.new(:v), 5, 7)
 	SCENES[:start].add_object(Wall.new(:v), 5, 6)
 
+	SCENES[:start].add_object(Shrubbery.new, 7, 8)
+
 	# example:
 	# SCENES[:start].directions = { e: :test }
 

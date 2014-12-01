@@ -85,9 +85,9 @@ class Game
 				@menus[:help].hide
 				handle_actions(q)
 			when 3 # Ctrl + c
-				Console.log("#{@scene.player.x}, #{@scene.player.y}", true)
+				Console.log("#{@scene.player.x}, #{@scene.player.y}")
 			else
-				Console.log(key.inspect, true)
+				Console.log(key.inspect)
 			end
 		end
 	end

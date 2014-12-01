@@ -63,7 +63,7 @@ class Scene
 				return { scene: [@directions[:e], @player, 1, y] }
 			end
 		else
-			Console.log("Scene#move_player: invalid direction: #{direction.inspect}", true)
+			Console.log("Scene#move_player: invalid direction: #{direction.inspect}")
 		end
 		{}
 	end
@@ -73,12 +73,12 @@ class Scene
 		if @objects[pos]
 			if @objects[pos].can_pickup?
 				@player.inventory << item = @objects.delete(pos)
-				Console.log("You picked up #{item.name(:article)}!")
+				Console.write("You picked up #{item.name(:article)}!")
 			else
-				Console.log("There is nothing here to pickup.")
+				Console.write("There is nothing here to pickup.")
 			end
 		else
-			Console.log("There is nothing here to pickup.")
+			Console.write("There is nothing here to pickup.")
 		end
 	end
 
