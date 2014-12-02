@@ -28,7 +28,7 @@ class Scene
 		scene
 	end
 
-	def item_at(x, y)
+	def object_at(x, y)
 		@objects[[x, y]]
 	end
 
@@ -44,57 +44,49 @@ class Scene
 		case direction.to_sym
 		when :down
 			if y < @height - 2
-				if i = item_at(x, y + 1)
+				if i = object_at(x, y + 1)
 					return {} unless i.permeable?
 				end
 				@win.setpos(y, x)
 				@win.delch
 				@win.insch(" ")
 				@player.y += 1
-				@win.setpos(@player.y, @player.x)
-				@win << @player.to_s
 			elsif y == @height - 2
 				return { scene: [@directions[:s], @player, x, 1] }
 			end
 		when :up
 			if y > 1
-				if i = item_at(x, y - 1)
+				if i = object_at(x, y - 1)
 					return {} unless i.permeable?
 				end
 				@win.setpos(y, x)
 				@win.delch
 				@win.insch(" ")
 				@player.y -= 1
-				@win.setpos(@player.y, @player.x)
-				@win << @player.to_s
 			elsif y == 1
 				return { scene: [@directions[:n], @player, x, @height - 2] }
 			end
 		when :left
 			if x > 1
-				if i = item_at(x - 1, y)
+				if i = object_at(x - 1, y)
 					return {} unless i.permeable?
 				end
 				@win.setpos(y, x)
 				@win.delch
 				@win.insch(" ")
 				@player.x -= 1
-				@win.setpos(@player.y, @player.x)
-				@win << @player.to_s
 			else
 				return { scene: [@directions[:w], @player, @width - 2, y] }
 			end
 		when :right
 			if x < @width - 2
-				if i = item_at(x + 1, y)
+				if i = object_at(x + 1, y)
 					return {} unless i.permeable?
 				end
 				@win.setpos(y, x)
 				@win.delch
 				@win.insch(" ")
 				@player.x += 1
-				@win.setpos(@player.y, @player.x)
-				@win << @player.to_s
 			elsif x == @width - 2
 				return { scene: [@directions[:e], @player, 1, y] }
 			end
@@ -131,7 +123,6 @@ class Scene
 
 
 	def draw
-		# @win.clear
 		@win.box("|", "-")
 		@objects.each do |(x, y), obj|
 			@win.setpos(y, x)
