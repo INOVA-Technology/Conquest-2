@@ -54,9 +54,25 @@ class Game
 		end
 		if actions[:item_action]
 			item, action = actions[:item_action]
-			case 
+			case action
 			when :inspect
-				Console.write(item.inspect)
+				Console.write(item.description)
+			when :eat
+				if item.is_a?(Food)
+					max_health = @scene.player.max_health
+					old_health = @scene.player.health
+					item_health = item.health
+
+					@scene.player.health += item_health
+					@scene.player.health = max_health if @scene.player.health > max_health
+				
+					diff = @scene.player.health - old_health
+					item.health -= diff
+					
+					@scene.player.inventory.delete(item) if item.health == 0
+				else
+					Console.write("You can't eat that!") # this shouldn't be able to happen
+				end
 			end
 		end
 	end
@@ -84,8 +100,6 @@ class Game
 				handle_actions(q)
 			when "p"
 				@scene.pickup_item
-			when "e"
-				@scene.player.eat
 			when "q"
 				@scene.close
 				Console.close
@@ -96,6 +110,8 @@ class Game
 				q = @menus[:help].show
 				@menus[:help].hide
 				handle_actions(q)
+			when 12
+				Console.log(@scene.player.health)
 			when 3 # Ctrl + c
 				Console.log("#{@scene.player.x}, #{@scene.player.y}")
 			else

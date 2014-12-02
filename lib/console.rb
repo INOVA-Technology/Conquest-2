@@ -2,7 +2,7 @@ class Console
 	class << self
 		def start(y, max_messages)
 			@@max_messages = max_messages
-			@@win = Curses::Window.new(@@max_messages, 80, y, 0)
+			@@win = Curses::Window.new(@@max_messages, 0, y, 0)
 			@@messages = []
 		end
 
