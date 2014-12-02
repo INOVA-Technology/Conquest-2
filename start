@@ -2,6 +2,8 @@
 
 require "curses"
 require_relative "lib/console"
+Console.start(17, 5)
+
 require_relative "lib/menu"
 require_relative "lib/player"
 require_relative "lib/game_object"
@@ -14,9 +16,6 @@ Curses.init_screen
 Curses.stdscr.keypad(true)
 Curses.curs_set(0)
 Curses.refresh
-
-# init
-Console.start(17, 5)
 
 class Game
 

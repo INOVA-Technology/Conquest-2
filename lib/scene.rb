@@ -12,18 +12,26 @@ class Scene
 		@player = nil
 	end
 
-	def self.load_from_array(array)
+	def self.load_from_file(file)
 		scene = Scene.new
-		x = y = 0
-		array.each_with_index do |obj, i|
-			if (i + 1) % scene.width == 0
-				y += 1
-				x = 0
-			else
-				x += 1
+		File.readlines(file).each_with_index do |line, y|
+			line.chars.each_with_index do |char, x|
+				bla = case char
+				when "∆" then Pizza.new
+				when "%" then Shrubbery.new
+				when "-" then Wall.new(:h)
+				when "|" then Wall.new(:v)
+				when "┌" then Wall.new(:tl)
+				when "┐" then Wall.new(:tr)
+				when "└" then Wall.new(:bl)
+				when "┘" then Wall.new(:br)
+				when ".", "\n" # ignore these
+				else
+					Console.log("Scene.load_from_file: invalid charecter: #{char.inspect}")
+					nil
+				end
+				scene.objects[[x, y]] = bla unless bla.nil?
 			end
-			next if obj.nil?
-			scene.objects[[x, y]] = obj.shift.new(*obj)
 		end
 		scene
 	end
