@@ -1,6 +1,6 @@
 class Scene
 
-	attr_accessor :player, :width, :height, :directions
+	attr_accessor :player, :width, :height, :directions, :objects
 
 	def initialize
 		@width = 40
@@ -10,6 +10,22 @@ class Scene
 		@objects = {}
 		@directions = {}
 		@player = nil
+	end
+
+	def self.load_from_array(array)
+		scene = Scene.new
+		x = y = 0
+		array.each_with_index do |obj, i|
+			if (i + 1) % scene.width == 0
+				y += 1
+				x = 0
+			else
+				x += 1
+			end
+			next if obj.nil?
+			scene.objects[[x, y]] = obj.shift.new(*obj)
+		end
+		scene
 	end
 
 	def item_at(x, y)

@@ -1,33 +1,64 @@
 module SceneList
 
-	SCENES = {
-		start: Scene.new
+	def self.tlwl
+		[Wall, :topleft]
+	end
+
+	def self.tlwl
+		[Wall, :topleft]
+	end
+
+	def self.trwl
+		[Wall, :topright]
+	end
+
+	def self.blwl
+		[Wall, :bottomleft]
+	end
+
+	def self.brwl
+		[Wall, :bottomright]
+	end
+
+	def self.hwl
+		[Wall, :horizontal]
+	end
+
+	def self.vwl
+		[Wall, :vertical]
+	end
+
+	def self.shrb
+		[Shrubbery]
+	end
+
+	def self.pza
+		[Pizza]
+	end
+
+	ARRAYS = {
+		start: [
+			 nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, pza, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil,tlwl, hwl, hwl, hwl, hwl,trwl, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil, vwl, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil, vwl, nil,shrb, nil, nil, vwl, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil, vwl, nil, nil, nil, nil, vwl, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil,blwl, hwl, hwl, hwl, hwl,brwl, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+			 nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil
+		]
 	}
 
-	SCENES[:start].add_object(Pizza.new, 3, 3)
-
-	SCENES[:start].add_object(Wall.new(:tl), 5, 5)
-	SCENES[:start].add_object(Wall.new(:h), 6, 5)
-	SCENES[:start].add_object(Wall.new(:h), 7, 5)
-	SCENES[:start].add_object(Wall.new(:h), 8, 5)
-	SCENES[:start].add_object(Wall.new(:h), 9, 5)
-	SCENES[:start].add_object(Wall.new(:tr), 10, 5)
-	SCENES[:start].add_object(Wall.new(:v), 10, 6)
-	# door/entrance here                    10, 7
-	SCENES[:start].add_object(Wall.new(:v), 10, 8)
-	SCENES[:start].add_object(Wall.new(:v), 10, 9)
-	SCENES[:start].add_object(Wall.new(:br), 10, 10)
-	SCENES[:start].add_object(Wall.new(:h), 9, 10)
-	SCENES[:start].add_object(Wall.new(:h), 8, 10)
-	SCENES[:start].add_object(Wall.new(:h), 7, 10)
-	SCENES[:start].add_object(Wall.new(:h), 6, 10)
-	SCENES[:start].add_object(Wall.new(:bl), 5, 10)
-	SCENES[:start].add_object(Wall.new(:v), 5, 9)
-	SCENES[:start].add_object(Wall.new(:v), 5, 8)
-	SCENES[:start].add_object(Wall.new(:v), 5, 7)
-	SCENES[:start].add_object(Wall.new(:v), 5, 6)
-
-	SCENES[:start].add_object(Shrubbery.new, 7, 8)
+	SCENES = {
+		start: Scene.load_from_array(ARRAYS[:start])
+	}
 
 	# example:
 	# SCENES[:start].directions = { e: :test }
