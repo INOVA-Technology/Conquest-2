@@ -27,7 +27,8 @@ class Game
 		@menus = {
 			inventory: InventoryMenu.new(30, 15, @scene.width, @scene.height),
 			help: HelpMenu.new(30, 10, @scene.width, @scene.height),
-			commands: CommandsMenu.new(30, 10, @scene.width, @scene.height)
+			commands: CommandsMenu.new(30, 10, @scene.width, @scene.height),
+			item_actions: ItemActionsMenu.new(30, 10, @scene.width, @scene.height)
 		}
 	end
 
@@ -35,8 +36,11 @@ class Game
 		if actions[:menu]
 			menu = @menus[actions[:menu]]
 			if menu
-				menu.show
+				menu.item = actions[:menu_item] if ItemActionsMenu === menu
+				@scene.draw
+				q = menu.show
 				menu.hide
+				handle_actions(q)
 			else
 				Console.log("Game#handle_actions: menu '#{menu.inspect}' doesn't exist")
 			end
@@ -47,6 +51,13 @@ class Game
 			if scene
 				@scene = scene
 				@scene.set_player(actions[:scene][1], actions[:scene][2], actions[:scene][3])
+			end
+		end
+		if actions[:item_action]
+			item, action = actions[:item_action]
+			case 
+			when :inspect
+				Console.write(item.inspect)
 			end
 		end
 	end
@@ -74,6 +85,8 @@ class Game
 				handle_actions(q)
 			when "p"
 				@scene.pickup_item
+			when "e"
+				@scene.player.eat
 			when "q"
 				@scene.close
 				Console.close

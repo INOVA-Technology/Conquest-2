@@ -1,6 +1,6 @@
 class GameObject
 
-	attr_accessor :permeable, :can_pickup
+	attr_accessor :permeable, :can_pickup, :actions, :inspect
 
 	alias_method :permeable?, :permeable
 	alias_method :can_pickup?, :can_pickup
@@ -10,6 +10,8 @@ class GameObject
 		@permeable = true
 		@can_pickup = false
 		@names = ["", "", ""]
+		@actions = { "e" => ["Inspect", :inspect] }
+		@inspect = "Hm... What is this?"
 	end
 
 	def to_s
@@ -59,6 +61,7 @@ class Pizza < Food
 	def initialize
 		super("∆", 10)
 		@names = ["pizza", "a pizza", "pizzas"]
+		@inspect = "This pizza looks good! Wait, is that bacon on it!?"
 	end
 end
 
@@ -67,5 +70,6 @@ class Shrubbery < GameObject
 		super("%")
 		@can_pickup = true
 		@names = ["shrubbery", "a shrubbery", "shrubberies"]
+		@inspect = "This shrubbery looks nice, and not too expensive."
 	end
 end

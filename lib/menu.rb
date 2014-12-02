@@ -127,7 +127,48 @@ class InventoryMenu < Menu
 
 	def draw_text
 		title("Inventory")
-		duh = @inventory.map { |item| item.name(:article) }
+		letter = "a"
+		duh = @inventory.map do |item|
+			idk = "#{letter} - #{item.name(:article)}"
+			letter.next!
+			idk
+		end
 		draw_list(duh, 2)
 	end
+
+	def extra_keys(key)
+		actions = {}
+		if ("a".."z") === key
+			if key.ord - 96 <= @inventory.length
+				Console.log("gtrjbedg")
+				item = @inventory[key.ord - 97]
+				actions[:menu] = :item_actions
+				actions[:menu_item] = item
+			end
+		end
+		actions
+	end
+end
+
+class ItemActionsMenu < Menu
+
+	attr_accessor :item
+
+	def draw_text
+		title(@item.name)
+		duh = @item.actions.map do |key, (text, _)|
+			"#{key} - #{text}"
+		end
+		draw_list(duh, 2)
+	end
+
+	def extra_keys(key)
+		actions = {}
+		if @item.actions[key]
+			m = @item.actions[key][1]
+			actions[:item_action] = [@item, m]
+		end
+		actions
+	end
+
 end
