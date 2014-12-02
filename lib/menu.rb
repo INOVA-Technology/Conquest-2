@@ -140,7 +140,6 @@ class InventoryMenu < Menu
 		actions = {}
 		if ("a".."z") === key
 			if key.ord - 96 <= @inventory.length
-				Console.log("gtrjbedg")
 				item = @inventory[key.ord - 97]
 				actions[:menu] = :item_actions
 				actions[:menu_item] = item
@@ -165,8 +164,7 @@ class ItemActionsMenu < Menu
 	def extra_keys(key)
 		actions = {}
 		if @item.actions[key]
-			m = @item.actions[key][1]
-			actions[:item_action] = [@item, m]
+			actions[:item_action] = [@item, @item.actions[key][1]]
 		end
 		actions
 	end

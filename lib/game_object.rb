@@ -10,7 +10,7 @@ class GameObject
 		@permeable = true
 		@can_pickup = false
 		@names = ["", "", ""]
-		@actions = { "e" => ["Inspect", :inspect] }
+		@actions = { "i" => ["Inspect", :inspect] }
 		@inspect = "Hm... What is this?"
 	end
 

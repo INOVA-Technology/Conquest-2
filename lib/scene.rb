@@ -47,7 +47,12 @@ class Scene
 				if i = item_at(x, y + 1)
 					return {} unless i.permeable?
 				end
+				@win.setpos(y, x)
+				@win.delch
+				@win.insch(" ")
 				@player.y += 1
+				@win.setpos(@player.y, @player.x)
+				@win << @player.to_s
 			elsif y == @height - 2
 				return { scene: [@directions[:s], @player, x, 1] }
 			end
@@ -56,7 +61,12 @@ class Scene
 				if i = item_at(x, y - 1)
 					return {} unless i.permeable?
 				end
+				@win.setpos(y, x)
+				@win.delch
+				@win.insch(" ")
 				@player.y -= 1
+				@win.setpos(@player.y, @player.x)
+				@win << @player.to_s
 			elsif y == 1
 				return { scene: [@directions[:n], @player, x, @height - 2] }
 			end
@@ -65,7 +75,12 @@ class Scene
 				if i = item_at(x - 1, y)
 					return {} unless i.permeable?
 				end
+				@win.setpos(y, x)
+				@win.delch
+				@win.insch(" ")
 				@player.x -= 1
+				@win.setpos(@player.y, @player.x)
+				@win << @player.to_s
 			else
 				return { scene: [@directions[:w], @player, @width - 2, y] }
 			end
@@ -74,7 +89,12 @@ class Scene
 				if i = item_at(x + 1, y)
 					return {} unless i.permeable?
 				end
+				@win.setpos(y, x)
+				@win.delch
+				@win.insch(" ")
 				@player.x += 1
+				@win.setpos(@player.y, @player.x)
+				@win << @player.to_s
 			elsif x == @width - 2
 				return { scene: [@directions[:e], @player, 1, y] }
 			end
@@ -89,6 +109,9 @@ class Scene
 		if @objects[pos]
 			if @objects[pos].can_pickup?
 				@player.inventory << item = @objects.delete(pos)
+				@win.setpos(@player.y, @player.x)
+				@win.delch
+				@win.insch(" ")
 				Console.write("You picked up #{item.name(:article)}!")
 			else
 				Console.write("There is nothing here to pickup.")
@@ -108,14 +131,14 @@ class Scene
 
 
 	def draw
-		@win.clear
+		# @win.clear
 		@win.box("|", "-")
 		@objects.each do |(x, y), obj|
 			@win.setpos(y, x)
 			@win << obj.to_s
 		end
 		@win.setpos(@player.y, @player.x)
-		@win << player.to_s
+		@win << @player.to_s
 		@win.refresh
 	end
 
