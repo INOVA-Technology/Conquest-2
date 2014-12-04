@@ -6,7 +6,6 @@ class Scene
 		@width = 40
 		@height = 15
 		@win = Curses::Window.new(@height, @width, 0, 0)
-		@win.bkgd(".")
 		@objects = {}
 		@directions = {}
 		@player = nil
