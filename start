@@ -104,7 +104,7 @@ class Game
 			when "p"
 				@scene.pickup_item
 			when "q"
-				@scene.close
+				SceneList::SCENES.each { |_, s| s.close }
 				Console.close
 				@menus.each { |_, m| m.close }
 				Curses.close_screen

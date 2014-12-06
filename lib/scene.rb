@@ -17,6 +17,7 @@ class Scene
 			line.chars.each_with_index do |char, x|
 				bla = case char
 				when "∆" then Pizza.new
+				when "⌘" then Pretzel.new
 				when "%" then Shrubbery.new
 				when "-" then Wall.new(:h)
 				when "|" then Wall.new(:v)
@@ -47,6 +48,7 @@ class Scene
 		@player.y = y
 	end
 
+	# this is hideous and needs to be refactored
 	def move_player(direction)
 		x = @player.x
 		y = @player.y
@@ -61,6 +63,9 @@ class Scene
 				@win.insch(" ")
 				@player.y += 1
 			elsif y == @height - 2
+				@win.setpos(y, x)
+				@win.delch
+				@win.insch(" ")
 				return { scene: [@directions[:s], @player, x, 1] }
 			end
 		when :up
@@ -73,6 +78,9 @@ class Scene
 				@win.insch(" ")
 				@player.y -= 1
 			elsif y == 1
+				@win.setpos(y, x)
+				@win.delch
+				@win.insch(" ")
 				return { scene: [@directions[:n], @player, x, @height - 2] }
 			end
 		when :left
@@ -85,6 +93,9 @@ class Scene
 				@win.insch(" ")
 				@player.x -= 1
 			else
+				@win.setpos(y, x)
+				@win.delch
+				@win.insch(" ")
 				return { scene: [@directions[:w], @player, @width - 2, y] }
 			end
 		when :right
@@ -97,6 +108,9 @@ class Scene
 				@win.insch(" ")
 				@player.x += 1
 			elsif x == @width - 2
+				@win.setpos(y, x)
+				@win.delch
+				@win.insch(" ")
 				return { scene: [@directions[:e], @player, 1, y] }
 			end
 		else
@@ -136,9 +150,9 @@ class Scene
 		@objects.each do |(x, y), obj|
 			@win.setpos(y, x)
 			if obj.color
-				Curses.setpos(y, x)
-				Curses.attron(Curses.color_pair(obj.color)|Curses::A_NORMAL) do
-					Curses.addstr obj.to_s
+				@win.setpos(y, x)
+				@win.attron(Curses.color_pair(obj.color)|Curses::A_NORMAL) do
+					@win << obj.to_s
 				end
 			else
 				@win << obj.to_s
@@ -147,6 +161,10 @@ class Scene
 		@win.setpos(@player.y, @player.x)
 		@win << @player.to_s
 		@win.refresh
+	end
+
+	def clear
+		@win.clear
 	end
 
 	def close

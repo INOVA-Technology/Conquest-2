@@ -77,6 +77,14 @@ class Pizza < Food
 	end
 end
 
+class Pretzel < Food
+	def initialize
+		super("⌘", 5)
+		@names = ["pretzel", "a pretzel", "pretzels"]
+		@description = "This is a nice salted hot pretzel."
+	end
+end
+
 class Shrubbery < GameObject
 	def initialize
 		super("%")
