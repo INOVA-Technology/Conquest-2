@@ -21,7 +21,8 @@ class Game
 
 	def initialize
 		@scene = SceneList::SCENES[:start]
-		@scene.set_player(Player.new, @scene.width / 2, @scene.height / 2)
+		# @scene.set_player(Player.new, @scene.width / 2, @scene.height / 2)
+		@scene.set_player(Player.new, 8, 4)
 
 		@menus = {
 			inventory: InventoryMenu.new(30, 15, @scene.width, @scene.height),

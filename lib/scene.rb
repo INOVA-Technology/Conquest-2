@@ -24,7 +24,8 @@ class Scene
 				when "┐" then Wall.new(:tr)
 				when "└" then Wall.new(:bl)
 				when "┘" then Wall.new(:br)
-				when ".", "\n" # ignore these
+				when "#" then Bush.new
+				when " ", "\n", "⏐" # ignore these
 				else
 					Console.log("Scene.load_from_file: invalid charecter: #{char.inspect}")
 					nil

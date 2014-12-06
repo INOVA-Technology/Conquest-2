@@ -78,3 +78,10 @@ class Shrubbery < GameObject
 		@description = "This shrubbery looks nice, and not too expensive."
 	end
 end
+
+class Bush < GameObject
+	def initialize
+		super("#")
+		@permeable = false
+	end
+end
