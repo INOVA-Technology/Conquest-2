@@ -25,12 +25,13 @@ class Scene
 				when "└" then Wall.new(:bl)
 				when "┘" then Wall.new(:br)
 				when "#" then Bush.new
+				when "░" then Path.new
 				when " ", "\n", "⏐" # ignore these
 				else
 					Console.log("Scene.load_from_file: invalid charecter: #{char.inspect}")
 					nil
 				end
-				scene.objects[[x, y]] = bla unless bla.nil?
+				scene.objects[[x + 1, y + 1]] = bla unless bla.nil?
 			end
 		end
 		scene

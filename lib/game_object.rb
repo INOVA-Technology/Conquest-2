@@ -51,6 +51,12 @@ class Wall < GameObject
 	end
 end
 
+class Path < GameObject
+	def initialize
+		super("░")
+	end
+end
+
 class Food < GameObject
 
 	attr_accessor :health
