@@ -13,6 +13,8 @@ require_relative "lib/scene_list"
 Curses.raw
 Curses.noecho
 Curses.init_screen
+Curses.start_color
+Curses.init_pair(Curses::COLOR_GREEN, Curses::COLOR_GREEN, Curses::COLOR_BLACK)
 Curses.stdscr.keypad(true)
 Curses.curs_set(0)
 Curses.refresh

@@ -134,7 +134,14 @@ class Scene
 		@win.box("|", "-")
 		@objects.each do |(x, y), obj|
 			@win.setpos(y, x)
-			@win << obj.to_s
+			if obj.color
+				Curses.setpos(y, x)
+				Curses.attron(Curses.color_pair(obj.color)|Curses::A_NORMAL) do
+					Curses.addstr obj.to_s
+				end
+			else
+				@win << obj.to_s
+			end
 		end
 		@win.setpos(@player.y, @player.x)
 		@win << @player.to_s

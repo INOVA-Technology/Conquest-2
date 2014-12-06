@@ -1,6 +1,6 @@
 class GameObject
 
-	attr_accessor :permeable, :can_pickup, :actions, :description
+	attr_accessor :permeable, :can_pickup, :actions, :description, :color
 
 	alias_method :permeable?, :permeable
 	alias_method :can_pickup?, :can_pickup
@@ -12,6 +12,7 @@ class GameObject
 		@names = ["", "", ""]
 		@actions = { "i" => ["Inspect", :inspect] }
 		@description = "Hm... What is this?"
+		@color = nil
 	end
 
 	def to_s
@@ -83,5 +84,6 @@ class Bush < GameObject
 	def initialize
 		super("#")
 		@permeable = false
+		@color = Curses::COLOR_GREEN
 	end
 end
