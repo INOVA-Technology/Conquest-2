@@ -15,6 +15,9 @@ Curses.noecho
 Curses.init_screen
 Curses.start_color
 Curses.init_pair(Curses::COLOR_GREEN, Curses::COLOR_GREEN, Curses::COLOR_BLACK)
+Curses.init_pair(Curses::COLOR_BLUE, Curses::COLOR_BLUE, Curses::COLOR_BLACK)
+Curses.init_pair(Curses::COLOR_RED, Curses::COLOR_RED, Curses::COLOR_BLACK)
+Curses.init_pair(Curses::COLOR_YELLOW, Curses::COLOR_YELLOW, Curses::COLOR_BLACK)
 Curses.stdscr.keypad(true)
 Curses.curs_set(0)
 Curses.refresh
@@ -22,9 +25,19 @@ Curses.refresh
 class Game
 
 	def initialize
-		@scene = SceneList::SCENES[:start]
+		scene = :start
+		x = 8
+		y = 4
+		if ARGV[0] == "-d"
+			if ARGV[1] && ARGV[2] && ARGV[3]
+				scene = ARGV[1].to_sym
+				x = ARGV[2].to_i
+				y = ARGV[3].to_i
+			end
+		end
+		@scene = SceneList::SCENES[scene]
 		# @scene.set_player(Player.new, @scene.width / 2, @scene.height / 2)
-		@scene.set_player(Player.new, 8, 4)
+		@scene.set_player(Player.new, x, y)
 
 		@menus = {
 			inventory: InventoryMenu.new(30, 15, @scene.width, @scene.height),

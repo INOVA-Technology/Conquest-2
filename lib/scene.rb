@@ -17,7 +17,6 @@ class Scene
 			line.chars.each_with_index do |char, x|
 				bla = case char
 				when "∆" then Pizza.new
-				when "⌘" then Pretzel.new
 				when "%" then Shrubbery.new
 				when "-" then Wall.new(:h)
 				when "|" then Wall.new(:v)
@@ -27,6 +26,11 @@ class Scene
 				when "┘" then Wall.new(:br)
 				when "#" then Bush.new
 				when "░" then Path.new
+				when "⌘" then Pretzel.new
+				when "•" then Shamrock.new
+				when "¥" then Rose.new
+				when "*" then Flower.new
+				when "^" then Carrot.new
 				when " ", "\n", "⏐" # ignore these
 				else
 					Console.log("Scene.load_from_file: invalid charecter: #{char.inspect}")

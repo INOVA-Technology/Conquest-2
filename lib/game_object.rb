@@ -79,7 +79,7 @@ end
 
 class Pretzel < Food
 	def initialize
-		super("⌘", 5)
+		super("⌘", 4)
 		@names = ["pretzel", "a pretzel", "pretzels"]
 		@description = "This is a nice salted hot pretzel."
 	end
@@ -88,6 +88,7 @@ end
 class Shrubbery < GameObject
 	def initialize
 		super("%")
+		@color = Curses::COLOR_GREEN
 		@can_pickup = true
 		@names = ["shrubbery", "a shrubbery", "shrubberies"]
 		@description = "This shrubbery looks nice, and not too expensive."
@@ -99,5 +100,44 @@ class Bush < GameObject
 		super("#")
 		@permeable = false
 		@color = Curses::COLOR_GREEN
+	end
+end
+
+class Rose < GameObject
+	def initialize
+		super("¥")
+		@can_pickup = true
+		@names = ["rose", "a rose", "roses"]
+		@description = "A lovely rose."
+		@color = Curses::COLOR_YELLOW
+	end
+end
+
+class Shamrock < GameObject
+	def initialize
+		super("•")
+		@can_pickup = true
+		@names = ["shamrock", "a shamrock", "shamrocks"]
+		@description = "Hey look, a shamrock! Too bad it only has 3 leaves."
+		@color = Curses::COLOR_GREEN
+	end
+end
+
+class Flower < GameObject
+	def initialize
+		super("*")
+		@can_pickup = true
+		@names = ["flower", "a flower", "flowers"]
+		@description = "A lovely flower."
+		@color = Curses::COLOR_RED
+	end
+end
+
+class Carrot < Food
+	def initialize
+		super("^", 5)
+		@names = ["carrot", "a carrot", "carrots"]
+		@description = "A carrot."
+		@color = Curses::COLOR_YELLOW
 	end
 end
