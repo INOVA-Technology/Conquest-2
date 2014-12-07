@@ -116,6 +116,8 @@ class CommandsMenu < Menu
 	def draw_text
 		cmds = ["i - show inventory",
 				"p - pickup item",
+				"s - show stats menu",
+				"q - quit",
 				"? - show help menu"]
 		draw_list(cmds, 1)
 	end
