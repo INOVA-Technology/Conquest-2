@@ -176,3 +176,15 @@ class ItemActionsMenu < Menu
 	end
 
 end
+
+class StatsMenu < Menu
+
+	attr_accessor :player
+
+	def draw_text
+		title("Stats")
+		rows = ["Health: #{@player.health}/#{@player.max_health}"]
+		draw_list(rows, 2)
+	end
+
+end
