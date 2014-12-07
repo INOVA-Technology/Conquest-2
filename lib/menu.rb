@@ -126,10 +126,18 @@ class InventoryMenu < Menu
 	attr_accessor :inventory
 
 	def draw_text
+		@du_hash = {}
 		title("Inventory")
 		letter = "a"
-		duh = @inventory.map do |item|
-			idk = "#{letter} - #{item.name(:article)}"
+		duh = @inventory.group_by { |i| i.name }
+		duh = duh.map do |name, items|
+			which = :article
+			unless items.one?
+				which = :plural
+				idk = "#{items.count} "
+			end
+			idk = "#{letter} - #{idk}#{items[0].name(which)}"
+			@du_hash[letter] = items
 			letter.next!
 			idk
 		end
@@ -138,12 +146,10 @@ class InventoryMenu < Menu
 
 	def extra_keys(key)
 		actions = {}
-		if ("a".."z") === key
-			if key.ord - 96 <= @inventory.length
-				item = @inventory[key.ord - 97]
-				actions[:menu] = :item_actions
-				actions[:menu_item] = item
-			end
+		if @du_hash[key]
+			item = @du_hash[key].first
+			actions[:menu] = :item_actions
+			actions[:menu_item] = item
 		end
 		actions
 	end
