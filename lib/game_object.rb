@@ -117,8 +117,15 @@ class Shamrock < GameObject
 	def initialize
 		super("•")
 		@can_pickup = true
-		@names = ["shamrock", "a shamrock", "shamrocks"]
-		@description = "Hey look, a shamrock! Too bad it only has 3 leaves."
+		if rand(1..100) == 1
+			@leaves = 4
+			@description = "Wow! A four leaf clover! This could come in handy..."
+			@names = ["4 leaf clover", "a 4 leaf clover", "four leaf clovers"]
+		else
+			@leaves = 3
+			@description = "Hey look, a shamrock! Too bad it only has 3 leaves."
+			@names = ["3 leaf clover", "a 3 leaf clover", "three leaf clovers"]
+		end
 		@color = Curses::COLOR_GREEN
 	end
 end
