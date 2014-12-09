@@ -185,7 +185,8 @@ class StatsMenu < Menu
 
 	def draw_text
 		title("Stats")
-		rows = ["Health: #{@player.health}/#{@player.max_health}"]
+		rows = ["Health: #{@player.health}/#{@player.max_health}",
+				"Money: #{@player.money}"]
 		draw_list(rows, 2)
 	end
 

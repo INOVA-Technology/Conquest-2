@@ -51,6 +51,18 @@ class Wall < GameObject
 	end
 end
 
+class Money < GameObject
+
+	attr_accessor :amount
+
+	def initialize(amount)
+		super("$")
+		@can_pickup = true
+		@color = Curses::COLOR_YELLOW
+		@amount = amount
+	end
+end
+
 class Path < GameObject
 	def initialize
 		super("░")
@@ -146,5 +158,11 @@ class Carrot < Food
 		@names = ["carrot", "a carrot", "carrots"]
 		@description = "A carrot."
 		@color = Curses::COLOR_YELLOW
+	end
+end
+
+class Soil < GameObject
+	def initialize
+		super("~")
 	end
 end

@@ -31,6 +31,8 @@ class Scene
 				when "¥" then Rose.new
 				when "*" then Flower.new
 				when "^" then Carrot.new
+				when "$" then Money.new(rand(5..10))
+				when "~" then Soil.new
 				when " ", "\n", "⏐" # ignore these
 				else
 					Console.log("Scene.load_from_file: invalid charecter: #{char.inspect}")
@@ -127,11 +129,21 @@ class Scene
 		pos = [@player.x, @player.y]
 		if @objects[pos]
 			if @objects[pos].can_pickup?
-				@player.inventory << item = @objects.delete(pos)
-				@win.setpos(@player.y, @player.x)
-				@win.delch
-				@win.insch(" ")
-				Console.write("You picked up #{item.name(:article)}!")
+				if @objects[pos].is_a?(Money)
+					dough = @objects[pos].amount
+					@player.money += dough
+					@objects.delete(pos)
+					@win.setpos(@player.y, @player.x)
+					@win.delch
+					@win.insch(" ")
+					Console.write("+ $#{dough}!")
+				else
+					@player.inventory << item = @objects.delete(pos)
+					@win.setpos(@player.y, @player.x)
+					@win.delch
+					@win.insch(" ")
+					Console.write("You picked up #{item.name(:article)}!")
+				end
 			else
 				Console.write("There is nothing here to pickup.")
 			end
