@@ -135,7 +135,7 @@ class Game
 			when 12
 				Console.log(@scene.player.health)
 			when 3 # Ctrl + c
-				Console.log("#{@scene.player.x}, #{@scene.player.y}")
+				Console.log("#{@scene.file_name}: #{@scene.player.x}, #{@scene.player.y}")
 			else
 				Console.log(key.inspect)
 			end

@@ -156,7 +156,7 @@ class Carrot < Food
 	def initialize
 		super("^", 5)
 		@names = ["carrot", "a carrot", "carrots"]
-		@description = "A carrot."
+		@description = "It's just a carrot idiot."
 		@color = Curses::COLOR_YELLOW
 	end
 end

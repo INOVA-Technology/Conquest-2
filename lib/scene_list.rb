@@ -1,12 +1,12 @@
 module SceneList
 
 	SCENES = {
-		garden: Scene.load_from_file("scenes/garden"),
-		path: Scene.load_from_file("scenes/path"),
+		garden: Scene.load_from_file("garden"),
+		path: Scene.load_from_file("path"),
 		#start
-		start: Scene.load_from_file("scenes/start"),
-		start_east: Scene.load_from_file("scenes/start_east"),
-		farm: Scene.load_from_file("scenes/farm")
+		start: Scene.load_from_file("start"),
+		start_east: Scene.load_from_file("start_east"),
+		farm: Scene.load_from_file("farm")
 	}
 
 	SCENES[:start].directions = { n: :path, e: :start_east }
