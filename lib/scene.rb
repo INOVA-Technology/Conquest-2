@@ -124,9 +124,9 @@ class Scene
 
 	def pickup_item
 		pos = [@player.x, @player.y]
-		if @objects[pos].can_pickup?
+		if @objects[pos] && @objects[pos].can_pickup?
 			da_stuff = @objects
-		elsif @objects_2[pos].can_pickup?
+		elsif @objects_2[pos] && @objects_2[pos].can_pickup?
 			da_stuff = @objects_2
 		else
 			Console.write("There is nothing here to pickup.")
